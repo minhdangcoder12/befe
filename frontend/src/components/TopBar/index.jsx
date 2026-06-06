@@ -15,6 +15,9 @@ function TopBar() {
   const location = useLocation();
   const [contextTitle, setContextTitle] = useState("");
   const { user, logout } = useAuth();
+  const greetingName = user
+    ? [user.first_name, user.last_name].filter(Boolean).join("-")
+    : "";
 
   const handleLogout = async () => {
     try {
@@ -95,7 +98,7 @@ function TopBar() {
         }}
       >
         <Typography variant="h6" color="inherit" component="div">
-          {user ? `Hi ${user.first_name}` : "Please Login"}
+          {user ? `Hi ${greetingName}` : "Please Login"}
         </Typography>
         <div className="topbar-right">
           {user && (
