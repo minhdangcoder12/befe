@@ -1,0 +1,25 @@
+.login-register-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem;
+  height: 100%;
+}
+
+.login-register-paper {
+  padding: 2rem;
+  width: 100%;
+  max-width: 560px;
+}
+
+.login-register-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}

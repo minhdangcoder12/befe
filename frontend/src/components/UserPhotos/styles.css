@@ -1,0 +1,16 @@
+.user-photos-comment-form {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+@media (max-width: 600px) {
+  .user-photos-comment-form {
+    flex-direction: column;
+  }
+
+  .user-photos-comment-form .MuiButton-root {
+    width: 100%;
+  }
+}

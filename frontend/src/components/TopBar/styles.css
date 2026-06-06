@@ -1,0 +1,16 @@
+.topbar-appBar {
+  height: 60px;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.topbar-context {
+  text-align: right;
+  max-width: min(420px, 50vw);
+}
