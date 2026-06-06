@@ -1,52 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const multer = require("multer");
-const path = require("path");
 const Photo = require("../db/photoModel");
 const User = require("../db/userModel");
 const router = express.Router();
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, "..", "images"));
-  },
-  filename: (req, file, cb) => {
-    const extension = path.extname(file.originalname || "");
-    const uniqueName = `${Date.now()}-${Math.round(
-      Math.random() * 1e9
-    )}${extension}`;
-    cb(null, uniqueName);
-  },
-});
-
-const upload = multer({ storage });
-
-router.post("/new", upload.any(), async (req, res) => {
-  const file = req.files && req.files[0];
-
-  if (!file) {
-    return res.status(400).json({ error: "No photo file uploaded" });
-  }
-
-  try {
-    const photo = await Photo.create({
-      file_name: file.filename,
-      date_time: new Date(),
-      user_id: req.session.user_id,
-      comments: [],
-    });
-
-    return res.json({
-      _id: photo._id,
-      user_id: photo.user_id,
-      file_name: photo.file_name,
-      date_time: photo.date_time,
-      comments: [],
-    });
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
-  }
-});
 
 router.get("/:id", async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {

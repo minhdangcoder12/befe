@@ -14,7 +14,6 @@ import {
 } from "@mui/material";
 import {
   Link as RouterLink,
-  useLocation,
   useParams,
 } from "react-router-dom";
 
@@ -141,8 +140,6 @@ function PhotoCard({ photo, onAddComment }) {
 
 function UserPhotos() {
   const { userId } = useParams();
-  const location = useLocation();
-  const uploadedAt = location.state && location.state.uploadedAt;
 
   const [photos, setPhotos] = useState([]);
   const [error, setError] = useState(null);
@@ -172,7 +169,7 @@ function UserPhotos() {
     return () => {
       cancelled = true;
     };
-  }, [userId, uploadedAt]);
+  }, [userId]);
 
   const addComment = async (targetPhotoId, commentText) => {
     const newComment = await fetchModel(`/commentsOfPhoto/${targetPhotoId}`, {

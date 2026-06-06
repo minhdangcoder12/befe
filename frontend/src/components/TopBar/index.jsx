@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Button,
   Toolbar,
   Typography,
 } from "@mui/material";
-import { matchPath, useLocation, useNavigate } from "react-router-dom";
+import { matchPath, useLocation } from "react-router-dom";
 
 import "./styles.css";
 import { useAuth } from "../../context/AuthContext";
@@ -13,11 +13,7 @@ import fetchModel from "../../lib/fetchModelData";
 
 function TopBar() {
   const location = useLocation();
-  const navigate = useNavigate();
-  const fileInputRef = useRef(null);
   const [contextTitle, setContextTitle] = useState("");
-  const [uploading, setUploading] = useState(false);
-  const [uploadError, setUploadError] = useState("");
   const { user, logout } = useAuth();
 
   const handleLogout = async () => {
@@ -25,37 +21,6 @@ function TopBar() {
       await logout();
     } catch (err) {
       console.error(err);
-    }
-  };
-
-  const handlePhotoButton = () => {
-    setUploadError("");
-    fileInputRef.current?.click();
-  };
-
-  const handlePhotoSelected = async (event) => {
-    const file = event.target.files && event.target.files[0];
-    event.target.value = "";
-
-    if (!file) {
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("photo", file);
-
-    setUploading(true);
-    setUploadError("");
-    try {
-      await fetchModel("/photos/new", {
-        method: "POST",
-        body: formData,
-      });
-      navigate(`/photos/${user._id}`, { state: { uploadedAt: Date.now() } });
-    } catch (err) {
-      setUploadError(err.message || "Could not upload photo.");
-    } finally {
-      setUploading(false);
     }
   };
 
@@ -134,30 +99,9 @@ function TopBar() {
         </Typography>
         <div className="topbar-right">
           {user && (
-            <>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                hidden
-                onChange={handlePhotoSelected}
-              />
-              <Button
-                color="inherit"
-                onClick={handlePhotoButton}
-                disabled={uploading}
-              >
-                {uploading ? "Uploading..." : "Add Photo"}
-              </Button>
-              <Button color="inherit" onClick={handleLogout}>
-                Logout
-              </Button>
-            </>
-          )}
-          {uploadError && (
-            <Typography variant="caption" color="inherit">
-              {uploadError}
-            </Typography>
+            <Button color="inherit" onClick={handleLogout}>
+              Logout
+            </Button>
           )}
           <Typography
             variant="subtitle1"

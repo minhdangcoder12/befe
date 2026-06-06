@@ -12,12 +12,6 @@ Backend can cai cac package bang:
 npm install
 ```
 
-Neu backend bi thieu thu vien upload anh thi cai them:
-
-```bash
-npm install multer
-```
-
 ## Cai dat frontend
 
 Trong thu muc frontend, chay:
